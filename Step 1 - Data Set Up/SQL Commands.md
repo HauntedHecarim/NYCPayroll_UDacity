@@ -1,5 +1,5 @@
 # Create Summary
-
+'''
 -- Use the same file format as used for creating the External Tables during the LOAD step.
 IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') 
     CREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] 
@@ -9,9 +9,9 @@ IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDeli
              USE_TYPE_DEFAULT = FALSE
             ))
 GO
-
+'''
 # Create Database
-
+'''
 -- Storage path where the result set will persist
 IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'nycpayroll_blob_core_windows_net') 
     CREATE EXTERNAL DATA SOURCE [nycpayroll_blob_core_windows_net] 
@@ -19,9 +19,9 @@ IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'nycpayroll_
         LOCATION = 'abfss://nycpayroll@nycpayroll.blob.core.windows.net' 
     )
 GO
-
+'''
 # Create Payroll Title
-
+'''
 CREATE EXTERNAL TABLE [dbo].[NYC_Payroll_TITLE_MD](
     [TitleCode] [varchar](10) NULL,
     [TitleDescription] [varchar](100) NULL
@@ -32,9 +32,9 @@ WITH (
       FILE_FORMAT = [SynapseDelimitedTextFormat]
 )
 GO
-
+'''
 # Create Payroll Agency
-
+'''
 REATE EXTERNAL TABLE [dbo].[NYC_Payroll_AGENCY_MD](
     [AgencyID] [varchar](10) NULL,
     [AgencyName] [varchar](50) NULL
@@ -45,8 +45,9 @@ WITH (
       FILE_FORMAT = [SynapseDelimitedTextFormat]
 )
 GO
-
+'''
 # Create Payroll Data
+'''
 CREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Data](
     [FiscalYear] [int] NULL,
     [PayrollNumber] [int] NULL,
@@ -73,5 +74,6 @@ WITH (
       DATA_SOURCE = [nycpayroll_blob_core_windows_net],
       FILE_FORMAT = [SynapseDelimitedTextFormat]
 )
+'''
 GO
 
